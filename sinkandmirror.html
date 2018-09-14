@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+  <title>Sink and Mirror</title>
+  <script type="text/javascript" src="script.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  
+  <script>
+    var playerInventory = getLocalStorage("playerInventory");
+  </script>
+  
+  <table>
+    <tr>
+      <th>Sink and Mirror</th>
+      <th>Inventory</th>
+    </tr>
+    
+    <tr>
+      <td>
+        <p id="description"></p>
+        <p id="objects"></p>
+        <p id="message"></p>
+      <form onSubmit="return checkAnswer();">
+        ><input id="answer" type="text" maxlength="55" placeholder="_" autofocus autocomplete="off" />
+ 	    <input type="submit" class="submit" value="SUBMIT" />
+      </form>
+
+      <script>
+      const objectBox = new objectsInPage(sinkandmirror);
+      document.getElementById("description").innerHTML = sinkandmirror.desc;
+      document.getElementById("objects").innerHTML = objectBox.getObjects;
+      </script>
+      </td>
+      <td>
+        <select size="10" style="width: 100%;">
+          <script>
+            getInventory();
+          </script>
+        </select>
+      </td>
+    </tr>
+  </table>
+</body>
