@@ -11,41 +11,36 @@ var retrievalVerbs = ['get', 'retrieve', 'pickup'];
 var removeVerbs = ['drop', 'remove'];
 
 // Validate Verbs
-function validateVerbs(userInput, locationObject) {
+function validateVerbs(userInput, tempLocationArray, tempLocationArrayName, locationName) {
 	var count = 0;
-	debugMessage(locationObject.length)
-	while (count < locationObject.length) {
+	debugMessage( locationArray['objects'].length)
+	while (count < locationArray['objects'].length) {
 		debugMessage("test")
 		for (x = 0; x < retrievalVerbs.length; x++) {
-			var validation = retrievalVerbs[x] + ' ' + locationObject[count];
-			debugMessage(validation)
-			debugMessage(locationObject[count]);
+			var validation = retrievalVerbs[x] + ' ' + tempLocationArray[count];
+			//debugMessage(validation)
+			//debugMessage(tempLocationArray[count]);
 			if (userInput === validation) {
 				var playerInventory = getLocalStorage("playerInventory", playerInventory);
-				playerInventory.push(locationObject[count]);
-				debugMessage(locationObject[count])
-				debugMessage(playerInventory)
-				var index = locationObject.indexOf(locationObject[count])
-				
-				if (index > -1) {
-					locationObject = locationObject.splice(index, 1)
-				}
+				playerInventory.push(tempLocationArray[count]);
+				//debugMessage(tempLocationArray[count])
+				tempLocationArray = tempLocationArray.filter (item => item !== tempLocationArray[count])
 				setLocalStorage("playerInventory", playerInventory)
-				setLocalStorage(`${locationObject}`, locationObject)
+				setLocalStorage(tempLocationArrayName, tempLocationArray)
+				debugMessage(tempLocationArrayName)
 			}
+			debugMessage("test")
 		}
-			
+			debugMessage("test")
 		for (y = 0; y < removeVerbs.length; y++) {
-			var validation = removeVerbs[y] + ' ' + locationObject[count]
+			var validation = removeVerbs[y] + ' ' + tempLocationArray[count]
+			debugMessage("test")
 			if (userInput === validation) {
-				var index = playerInventory.indexOf(locationObject[count])
-				
-				if (index > -1) {
-					playerInventory.splice(index, 1);
-					locationObject.push(locationObject[count])
-				}
+				tempLocationArray.push(tempLocationArray[count])
+				//debugMessage(tempLocationArray[count])
+				playerInventory = playerInventory.filter (item => item !== tempLocationArray[count])
 				setLocalStorage("playerInventory", playerInventory)
-				setLocalStorage(`${locationObject}`, locationObject)
+				setLocalStorage(tempLocationArrayName, tempLocationArray)
 				
 			}
 		}
@@ -77,15 +72,6 @@ class playerChoice {
 */
 
 
-
-
-
-
-
-
-
-
-
 function debugMessage(message) {
   window.alert(message);
 }
@@ -106,35 +92,13 @@ function getInventory() {
   }
 }
 
-class objectsInPage {
-  constructor(pageName) {
-    this.pageName = pageName;
-  }
-  
-  // Getter
-  get getObjects() {
-    return this.objects();
-  }
-  
-  // Method
-  objects() {
-    if (this.pageName.length == 0 || typeof this.pageName.objects == "undefined" ) {
-    return this.notExists();
-  } else {
-    return this.exists();
-    }
-  }
-  
-  // If there are no objects in the room
-  notExists() {
-    var setObject = "<p>There are no objects in this room</p>";
-    return setObject;
-  }
-  
-	
-  // If there are objects in the room
-  exists() {
-    var setObject = this.pageName.objects
-    return "These are the objects in the room" = setObject;
-  }
+//Validate Objects
+
+function checkObjects (array) {
+	if (array.length === 0) {
+		document.getElementById("objects").innerHTML = "There are no objects in this room";
+	}
+	else {
+		document.getElementById("objects").innerHTML = "These are the items in the room: " + array.join(", ")
+	}
 }
