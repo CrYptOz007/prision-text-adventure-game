@@ -10,7 +10,7 @@
 <body>
   
   <script>
-		x
+		
     var playerInventory = getLocalStorage("playerInventory");
     
     if (typeof playerInventory == "undefined" || !(playerInventory instanceof Array)) {
@@ -20,12 +20,12 @@
 
     }
 		
-		var roomObjects = getLocalStorage("roomObjects")
+		var tempRoomObjects = getLocalStorage("roomObjects")
 		
 		if (typeof roomObjects == "undefined" || !(roomObjects instanceof Array)) {
-      roomObjects = room.objects;
+      tempRoomObjects = room.objects;
 
-      setLocalStorage("roomObjects", roomObjects);
+      setLocalStorage("tempRoomObjects", tempRoomObjects);
 
     }
 		
@@ -47,9 +47,8 @@
       </form>
 
       <script>
-				const objectBox = new objectsInPage(room)
         document.getElementById("description").innerHTML = room.desc;
-        document.getElementById("objects").innerHTML = objectBox.getObjects;
+        checkObjects(tempRoomObjects)
 
         function checkAnswer() {
           var userInput = document.getElementById("answer").value;
@@ -90,7 +89,7 @@
               } // End  switch
 						} //End If
           }  //End Loop
-					validateVerbs(userInput, roomObjects);
+					validateVerbs(userInput, tempRoomObjects, "tempRoomObjects", room);
         } //End Function
       </script>
       </td>
