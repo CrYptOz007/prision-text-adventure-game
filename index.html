@@ -10,7 +10,7 @@
 <body>
   
   <script>
-		
+		x
     var playerInventory = getLocalStorage("playerInventory");
     
     if (typeof playerInventory == "undefined" || !(playerInventory instanceof Array)) {
@@ -82,7 +82,8 @@
                 case direction[3]:
                   window.location.replace("/sinkmirror.html");
                   break;
-
+							
+								
                 default: document.getElementById("message").innerHTML += `There is nothing to the ${userInput}`;
                   return false;
                   break;

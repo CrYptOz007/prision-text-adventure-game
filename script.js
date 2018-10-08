@@ -15,15 +15,20 @@ function validateVerbs(userInput, locationObject) {
 	var count = 0;
 	debugMessage(locationObject.length)
 	while (count < locationObject.length) {
+		debugMessage("test")
 		for (x = 0; x < retrievalVerbs.length; x++) {
 			var validation = retrievalVerbs[x] + ' ' + locationObject[count];
+			debugMessage(validation)
 			debugMessage(locationObject[count]);
 			if (userInput === validation) {
+				var playerInventory = getLocalStorage("playerInventory", playerInventory);
 				playerInventory.push(locationObject[count]);
+				debugMessage(locationObject[count])
+				debugMessage(playerInventory)
 				var index = locationObject.indexOf(locationObject[count])
 				
 				if (index > -1) {
-					locationObjects.splice(index, 1)
+					locationObject = locationObject.splice(index, 1)
 				}
 				setLocalStorage("playerInventory", playerInventory)
 				setLocalStorage(`${locationObject}`, locationObject)
@@ -48,6 +53,37 @@ function validateVerbs(userInput, locationObject) {
 	}
 	return false;
 }
+/*
+class playerChoice {
+	constructor(message, direction, hasItem = false, locationPage) {
+		this.message = message;
+		this.direction = direction;
+		this.hasItem = hasItem;
+		this.locationPage = locationPage
+	}
+	get location() {
+		case this.direction:
+		if (this.hasItem) {
+			if (playerInventory.includes(hasItem)) {
+				window.location.replace(locationPage)
+ 			}
+			document.getElementById("message").innerHTML += message;
+      return false;
+      break;
+		}
+	}
+	
+}
+*/
+
+
+
+
+
+
+
+
+
 
 
 function debugMessage(message) {
@@ -99,6 +135,6 @@ class objectsInPage {
   // If there are objects in the room
   exists() {
     var setObject = this.pageName.objects
-    return setObject;
+    return "These are the objects in the room" = setObject;
   }
 }
