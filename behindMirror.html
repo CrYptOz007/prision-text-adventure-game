@@ -10,21 +10,24 @@
   
   <script>
 		
+    // Get playerInventory localstorage
     var playerInventory = getLocalStorage("playerInventory");
-		
+		// Get activity localstorage
 		var activityLog = getLocalStorage("activityLog");
+		// Get localStorage location array
 		
 		var tempBehindMirror = getLocalStorage("tempBehindMirror")
-		
-		if (typeof tempSinkAndMirrorObjects == "undefined" || !(tempBehindMirror instanceof Array)) {
+		// If user has not visited this page
+		if (typeof tempBehindMirror == "undefined" || !(tempBehindMirror instanceof Array)) {\
+			// Create objects into localStorage location Array
       tempBehindMirror = behindMirror.objects;
-
+			// Set localStorage Array
       setLocalStorage("tempBehindMirror", tempBehindMirror);
-
-    }
+    } // End if
 		
   </script>
   <table>
+  	<!--- Image Section --->
    	<tr>
    		<th colspan="2">Image</th>
    	</tr>
@@ -37,6 +40,7 @@
       <th>Inventory</th>
     </tr>
     
+    <!--- Description Section --->
     <tr>
       <td>
         <p id="description"></p>
@@ -48,18 +52,28 @@
       </form>
 
       <script>
-        getDescription(behindMirror)
-        checkObjects(tempBehindMirror)
+				// Get description from location object.description
+        getDescription(behindMirror);
+				// Check for objects in location
+        checkObjects(tempBehindMirror);
 
+				// checkAnswer function onSubmit
         function checkAnswer() {
+					// Set userInput from answer input
           var userInput = document.getElementById("answer").value;
 					
+					// Go back command
 					goBack(userInput, "sinkandmirror");
+					
+					// Validate verbs
 					validateVerbs(userInput, tempBehindMirror, "tempBehindMirror", behindMirror)
-					errorMessage(userInput)
+					// Error Message
+					errorMessage(userInput);
 				}
       </script>
       </td>
+      
+      <!--- Inventory Section --->
       <td>
         <select size="10" style="width: 100%; height: 100%;">
           <script>
@@ -68,9 +82,12 @@
         </select>
       </td>
     </tr>
+    
+    <!--- Activity Log Section --->
     <tr>
       <th colspan="2">Activity Log</th>
     </tr>
+    
     <tr>
     	<td colspan="2">
     	<select id="activityLog" size="10" style="width: 100%; height: 100%;">

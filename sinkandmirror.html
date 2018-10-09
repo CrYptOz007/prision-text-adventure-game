@@ -10,21 +10,24 @@
   
   <script>
 		
+		// Get playerInventory localstorage
     var playerInventory = getLocalStorage("playerInventory");
-		
+		// Get activity localstorage
 		var activityLog = getLocalStorage("activityLog");
+		// Get localStorage location array
 		
 		var tempSinkAndMirrorObjects = getLocalStorage("tempSinkAndMirrorObjects")
-		
-		if (typeof tempSinkAndMirrorObjects == "undefined" || !(tempSinkAndMirrorObjects instanceof Array)) {
+		// If user has not visited this page
+		if (typeof tempSinkAndMirrorObjects == "undefined" || !(tempSinkAndMirrorObjects instanceof Array)) {\
+			// Create objects into localStorage location Array
       tempSinkAndMirrorObjects = sinkAndMirror.objects;
-
+			// Set localStorage Array
       setLocalStorage("tempSinkAndMirrorObjects", tempSinkAndMirrorObjects);
-
-    }
+    } // End if
 		
   </script>
   <table>
+  	<!--- Image Section --->
    	<tr>
    		<th colspan="2">Image</th>
    	</tr>
@@ -37,6 +40,7 @@
       <th>Inventory</th>
     </tr>
     
+    <!--- Description Section --->
     <tr>
       <td>
         <p id="description"></p>
@@ -48,21 +52,33 @@
       </form>
 
       <script>
+				// Get description from location object.description
         getDescription(sinkAndMirror)
+				// Check for objects in location
         checkObjects(tempSinkAndMirrorObjects)
 
+				// checkAnswer function onSubmit
         function checkAnswer() {
+					// Set userInput from answer input
           var userInput = document.getElementById("answer").value;
 					
+					// validate use verbs: use hammer to access behind the mirror
 					validateUseVerbs(userInput, "hammer", "behindMirror")
+					// Go location function: room to the northwest
 					goLocation(userInput, "northwest", "room")
+					// Go back to room command
 					goBack(userInput, "room");
+					
+					// Validate verbs
 					validateVerbs(userInput, tempSinkAndMirrorObjects, "tempSinkAndMirrorObjects", sinkAndMirror)
+					// Error message
 					errorMessage(userInput)
 				}
       </script>
       </td>
       
+      
+			<!--- Inventory Section --->
       <td>
         <select size="10" style="width: 100%; height: 100%;">
           <script>
@@ -72,6 +88,7 @@
       </td>
     </tr>
     
+    <!--- Activity Log Section --->
     <tr>
       <th colspan="2">Activity Log</th>
     </tr>

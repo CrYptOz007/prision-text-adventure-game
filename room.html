@@ -10,21 +10,24 @@
   
   <script>
 		
+    // Get playerInventory localstorage
     var playerInventory = getLocalStorage("playerInventory");
-		
+		// Get activity localstorage
 		var activityLog = getLocalStorage("activityLog");
+		// Get localStorage location array
 		
 		var tempRoomObjects = getLocalStorage("tempRoomObjects")
-		
-		if (typeof tempRoomObjects == "undefined" || !(tempRoomObjects instanceof Array)) {
+		// If user has not visited this page
+		if (typeof tempRoomObjects == "undefined" || !(tempRoomObjects instanceof Array)) {\
+			// Create objects into localStorage location Array
       tempRoomObjects = room.objects;
-
+			// Set localStorage Array
       setLocalStorage("tempRoomObjects", tempRoomObjects);
-
-    }
+    } // End if
 		
   </script>
   <table>
+  	<!--- Image Section --->
    	<tr>
    		<th colspan="2">Image</th>
    	</tr>
@@ -37,6 +40,7 @@
       <th>Inventory</th>
     </tr>
     
+    <!--- Description Section --->
     <tr>
       <td>
         <p id="description"></p>
@@ -48,21 +52,34 @@
       </form>
 
       <script>
-        getDescription(room)
-        checkObjects(tempRoomObjects)
+				// Get description from location object.description
+        getDescription(room);
+				// Check for objects in location
+        checkObjects(tempRoomObjects);
 
+				// checkAnswer function onSubmit
         function checkAnswer() {
+					// Set userInput from answer input
           var userInput = document.getElementById("answer").value;
 					
-					goLocation(userInput, "north", "door", "key", "The door is locked")
-					goLocation(userInput, "southeast", "sinkAndMirror")
-					goLocation(userInput, "west", "toilet")
-					goLocation(userInput, "east", "bed")
-					validateVerbs(userInput, tempRoomObjects, "tempRoomObjects", room)
-					errorMessage(userInput)
+					// Go location function: door to the north requring a key. Message is "Door is locked"
+					goLocation(userInput, "north", "door", "key", "The door is locked");
+					// Go location function: sink and mirror to the southeast
+					goLocation(userInput, "southeast", "sinkAndMirror");
+					// Go location function: toilet to the west
+					goLocation(userInput, "west", "toilet");
+					// Go location function: bed to the east
+					goLocation(userInput, "east", "bed");
+					
+					// Validate verbs
+					validateVerbs(userInput, tempRoomObjects, "tempRoomObjects", room);
+					// Error message
+					errorMessage(userInput);
 				}
       </script>
       </td>
+      
+      <!--- Inventory Section --->
       <td>
         <select size="10" style="width: 100%; height: 100%;">
           <script>
@@ -71,9 +88,12 @@
         </select>
       </td>
     </tr>
+    
+    <!--- Activity Log Section --->
     <tr>
       <th colspan="2">Activity Log</th>
     </tr>
+    
     <tr>
     	<td colspan="2">
     	<select id="activityLog" size="10" style="width: 100%; height: 100%;">
