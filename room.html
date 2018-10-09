@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>
+  <title>Jail Room</title>
+  <script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/locationObjects.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+</head>
+<body>
+  
+  <script>
+		
+    var playerInventory = getLocalStorage("playerInventory");
+		
+		var activityLog = getLocalStorage("activityLog");
+		
+		var tempRoomObjects = getLocalStorage("tempRoomObjects")
+		
+		if (typeof tempRoomObjects == "undefined" || !(tempRoomObjects instanceof Array)) {
+      tempRoomObjects = room.objects;
+
+      setLocalStorage("tempRoomObjects", tempRoomObjects);
+
+    }
+		
+  </script>
+  <table>
+   	<tr>
+   		<th colspan="2">Image</th>
+   	</tr>
+   	<tr>
+   		<td colspan="2"><img src="images/room.jpg"></td>
+   	</tr>
+   
+    <tr>
+      <th>Prison Room</th>
+      <th>Inventory</th>
+    </tr>
+    
+    <tr>
+      <td>
+        <p id="description"></p>
+        <p id="objects"></p>
+        <p id="message"></p>
+      <form onSubmit="checkAnswer();">
+        ><input id="answer" type="text" maxlength="55" placeholder="_" autofocus autocomplete="off" />
+ 	    <input type="submit" class="submit" value="SUBMIT" />
+      </form>
+
+      <script>
+        getDescription(room)
+        checkObjects(tempRoomObjects)
+
+        function checkAnswer() {
+          var userInput = document.getElementById("answer").value;
+					
+					goLocation(userInput, "north", "door", "key", "The door is locked")
+					goLocation(userInput, "southeast", "sinkAndMirror")
+					goLocation(userInput, "west", "toilet")
+					goLocation(userInput, "east", "bed")
+					validateVerbs(userInput, tempRoomObjects, "tempRoomObjects", room)
+					errorMessage(userInput)
+				}
+      </script>
+      </td>
+      <td>
+        <select size="10" style="width: 100%; height: 100%;">
+          <script>
+            refreshContent("playerInventory");
+          </script>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th colspan="2">Activity Log</th>
+    </tr>
+    <tr>
+    	<td colspan="2">
+    	<select id="activityLog" size="10" style="width: 100%; height: 100%;">
+				<script>
+          refreshContent("activityLog");
+        </script>
+        </select>
+			</td>
+    </tr>
+  </table>
+  
+</body>

@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <head>
   <title>Jail Room</title>
-  <script type="text/javascript" src="script.js"></script>
-	<script type="text/javascript" src="locationObjects.js"></script>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/locationObjects.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
   <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
-
 </head>
 <body>
-  
-  <script>
-		
-    var playerInventory = getLocalStorage("playerInventory");
-    
+ <script>
     if (typeof playerInventory == "undefined" || !(playerInventory instanceof Array)) {
       var playerInventory = [];
 
@@ -20,87 +15,18 @@
 
     }
 		
-		var tempRoomObjects = getLocalStorage("roomObjects")
-		
-		if (typeof roomObjects == "undefined" || !(roomObjects instanceof Array)) {
-      tempRoomObjects = room.objects;
+		if (typeof activityLog == "undefined" || !(activityLog instanceof Array)) {
+      var activityLog = [];
 
-      setLocalStorage("tempRoomObjects", tempRoomObjects);
+      setLocalStorage("activityLog", activityLog);
 
     }
-		
-  </script>
-  <table>
-    <tr>
-      <th>Prison Room</th>
-      <th>Inventory</th>
-    </tr>
-    
-    <tr>
-      <td>
-        <p id="description"></p>
-        <p id="objects"></p>
-        <p id="message"></p>
-      <form onSubmit="return checkAnswer();">
-        ><input id="answer" type="text" maxlength="55" placeholder="_" autofocus autocomplete="off" />
- 	    <input type="submit" class="submit" value="SUBMIT" />
-      </form>
-
-      <script>
-        document.getElementById("description").innerHTML = room.desc;
-        checkObjects(tempRoomObjects)
-
-        function checkAnswer() {
-          var userInput = document.getElementById("answer").value;
-          for (i = 0; i < direction.length; i++) {
-            if (userInput == direction[i]) {
-              switch (userInput) {
-
-                case direction[0]:
-                  if (playerInventory.includes("key")) {
-                    window.location.replace("corridor.html")
-                  }
-                  document.getElementById("message").innerHTML += "The door is locked";
-                  return false;
-                  break;
-
-                case direction[2]:
-                  document.getElementById("message").innerHTML += "A comfortable wool bed awaits you...";
-                  return false;
-                  break;
-
-                case direction[6]:
-                  if (playerInventory.includes("plunger")) {
-                    window.location.replace("/toilet.html");
-                  } else {
-                    document.getElementById("message").innerHTML += "The toilet is clogged!"
-                  return false;
-                  }
-                  break;
-
-                case direction[3]:
-                  window.location.replace("/sinkmirror.html");
-                  break;
-							
-								
-                default: document.getElementById("message").innerHTML += `There is nothing to the ${userInput}`;
-                  return false;
-                  break;
-              } // End  switch
-						} //End If
-          }  //End Loop
-					validateVerbs(userInput, tempRoomObjects, "tempRoomObjects", room);
-        } //End Function
-      </script>
-      </td>
-      <td>
-        <select size="10" style="width: 100%;">
-          <script>
-            getInventory();
-          </script>
-        </select>
-      </td>
-    </tr>
-  </table>
-  
+	</script>
+  <div class="menu">
+  	<h1>Escape the Prision</h1>
+  	<h2>A text adventure game</h2>
+  	<h4>By Gerrick Cheok</h4>
+  	<h5 style="margin-top: -30px;">HTML, CSS, Javascript</h5>
+  	<button type="button" class="big-button" onclick="window.location.href = 'room.html'">Start Game</button>
+  </div>
 </body>
