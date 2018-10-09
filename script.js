@@ -13,64 +13,35 @@ var removeVerbs = ['drop', 'remove'];
 // Validate Verbs
 function validateVerbs(userInput, tempLocationArray, tempLocationArrayName, locationName) {
 	var count = 0;
-	debugMessage( locationArray['objects'].length)
-	while (count < locationArray['objects'].length) {
-		debugMessage("test")
+	while (count < locationName.objects.length) {
 		for (x = 0; x < retrievalVerbs.length; x++) {
 			var validation = retrievalVerbs[x] + ' ' + tempLocationArray[count];
-			//debugMessage(validation)
-			//debugMessage(tempLocationArray[count]);
 			if (userInput === validation) {
 				var playerInventory = getLocalStorage("playerInventory", playerInventory);
-				playerInventory.push(tempLocationArray[count]);
-				//debugMessage(tempLocationArray[count])
-				tempLocationArray = tempLocationArray.filter (item => item !== tempLocationArray[count])
-				setLocalStorage("playerInventory", playerInventory)
-				setLocalStorage(tempLocationArrayName, tempLocationArray)
-				debugMessage(tempLocationArrayName)
+				if (tempLocationArray.includes(tempLocationArray[count])) {
+					playerInventory.push(tempLocationArray[count]);
+					tempLocationArray = tempLocationArray.filter (item => item !== tempLocationArray[count])
+					setLocalStorage("playerInventory", playerInventory)
+					setLocalStorage(tempLocationArrayName, tempLocationArray)
+				}
 			}
-			debugMessage("test")
 		}
-			debugMessage("test")
 		for (y = 0; y < removeVerbs.length; y++) {
-			var validation = removeVerbs[y] + ' ' + tempLocationArray[count]
-			debugMessage("test")
+			var validation = removeVerbs[y] + ' ' + locationName.objects[count]
 			if (userInput === validation) {
-				tempLocationArray.push(tempLocationArray[count])
-				//debugMessage(tempLocationArray[count])
-				playerInventory = playerInventory.filter (item => item !== tempLocationArray[count])
-				setLocalStorage("playerInventory", playerInventory)
-				setLocalStorage(tempLocationArrayName, tempLocationArray)
-				
+				var playerInventory = getLocalStorage("playerInventory", playerInventory);
+				if (playerInventory.includes(locationName.objects[count])) {
+					tempLocationArray.push(locationName.objects[count])
+					playerInventory = playerInventory.filter (item => item !== locationName.objects[count])
+					setLocalStorage("playerInventory", playerInventory)
+					setLocalStorage(tempLocationArrayName, tempLocationArray)
+				}
 			}
 		}
 		count++
 	}
 	return false;
 }
-/*
-class playerChoice {
-	constructor(message, direction, hasItem = false, locationPage) {
-		this.message = message;
-		this.direction = direction;
-		this.hasItem = hasItem;
-		this.locationPage = locationPage
-	}
-	get location() {
-		case this.direction:
-		if (this.hasItem) {
-			if (playerInventory.includes(hasItem)) {
-				window.location.replace(locationPage)
- 			}
-			document.getElementById("message").innerHTML += message;
-      return false;
-      break;
-		}
-	}
-	
-}
-*/
-
 
 function debugMessage(message) {
   window.alert(message);
@@ -92,7 +63,32 @@ function getInventory() {
   }
 }
 
-//Validate Objects
+// Go to Location
+
+function goLocation (userInput, locationName, objectRequired = false, objectRequiredMessage = false) {
+	for (i = 0; i < direction.length) {
+		var validation = "go " + direction;
+		if (userInput === validation) {
+			if (!objectRequired) {
+				window.location.replace(locationName + ".html")
+			} else {
+					if (!playerInventory.includes(objectRequired)) {
+					document.getElementById("activityLog").innerHTML += objectRequiredMessage
+				} else {
+					window.location.replace(locationName + ".html")
+				}
+			}
+		}
+	}
+}
+
+// Get Location Description
+
+function getDescription (locationName) {
+	document.getElementById("description").innerHTML = locationName.desc
+}
+
+// Validate Objects
 
 function checkObjects (array) {
 	if (array.length === 0) {

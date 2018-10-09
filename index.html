@@ -20,9 +20,9 @@
 
     }
 		
-		var tempRoomObjects = getLocalStorage("roomObjects")
+		var tempRoomObjects = getLocalStorage("tempRoomObjects")
 		
-		if (typeof roomObjects == "undefined" || !(roomObjects instanceof Array)) {
+		if (typeof tempRoomObjects == "undefined" || !(tempRoomObjects instanceof Array)) {
       tempRoomObjects = room.objects;
 
       setLocalStorage("tempRoomObjects", tempRoomObjects);
@@ -47,12 +47,12 @@
       </form>
 
       <script>
-        document.getElementById("description").innerHTML = room.desc;
+        getDescription(room)
         checkObjects(tempRoomObjects)
 
         function checkAnswer() {
           var userInput = document.getElementById("answer").value;
-          for (i = 0; i < direction.length; i++) {
+          /*for (i = 0; i < direction.length; i++) {
             if (userInput == direction[i]) {
               switch (userInput) {
 
@@ -86,8 +86,10 @@
                 default: document.getElementById("message").innerHTML += `There is nothing to the ${userInput}`;
                   return false;
                   break;
-              } // End  switch
+              } // End  switc*/
 						} //End If
+					goLocation(userInput, sinkandmirror)
+					
           }  //End Loop
 					validateVerbs(userInput, tempRoomObjects, "tempRoomObjects", room);
         } //End Function
