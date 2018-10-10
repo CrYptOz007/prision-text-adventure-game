@@ -10,6 +10,8 @@
   
   <script>
 		
+		// Save location
+		saveLocation("bed.html");
 		// Get playerInventory localstorage
     var playerInventory = getLocalStorage("playerInventory");
 		// Get activity localstorage
@@ -18,12 +20,7 @@
 		
 		var tempBedObjects = getLocalStorage("tempBedObjects")
 		// If user has not visited this page
-		if (typeof tempBedObjects == "undefined" || !(tempBedObjects instanceof Array)) {
-			// Create objects into localStorage location Array
-      tempBedObjects = bed.objects;
-			// Set localStorage Array
-      setLocalStorage("tempBedObjects", tempBedObjects);
-    } // End if
+		loadObjects("tempBedObjects", tempBedObjects, bed)
 		
   </script>
   <table>

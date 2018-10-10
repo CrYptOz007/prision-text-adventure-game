@@ -10,21 +10,16 @@
   
   <script>
 		
+		// Save location
+		saveLocation("sinkandmirror.html");
 		// Get playerInventory localstorage
     var playerInventory = getLocalStorage("playerInventory");
 		// Get activity localstorage
 		var activityLog = getLocalStorage("activityLog");
 		// Get localStorage location array
-		
 		var tempSinkAndMirrorObjects = getLocalStorage("tempSinkAndMirrorObjects")
 		// If user has not visited this page
-		if (typeof tempSinkAndMirrorObjects == "undefined" || !(tempSinkAndMirrorObjects instanceof Array)) {
-			// Create objects into localStorage location Array
-      tempSinkAndMirrorObjects = sinkAndMirror.objects;
-			// Set localStorage Array
-      setLocalStorage("tempSinkAndMirrorObjects", tempSinkAndMirrorObjects);
-    } // End if
-		
+		loadObjects('tempSinkAndMirrorObjects', tempSinkAndMirrorObjects, sinkAndMirror)
   </script>
   <table>
   	<!--- Image Section --->

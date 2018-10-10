@@ -14,6 +14,19 @@ var removeVerbs = ['drop', 'remove'];
 var useVerbs = ['use'];
 
 
+// Load objects when new user visits the page
+function loadObjects (tempLocationObjectName, tempLocationObjects, locationName) {
+	// If user has not visited this page
+	if (typeof tempLocationObjects == "undefined" || !(tempLocationObjects instanceof Array)) {
+		// Create objects into localStorage location Array
+		var tempLocationObjects = locationName.objects;
+		// Set localStorage Array
+		setLocalStorage(tempLocationObjectName, tempLocationObjects);
+		location.reload();
+	} // End if
+}
+
+
 // Validate Verbs
 function validateVerbs(userInput, tempLocationArray, tempLocationArrayName, locationName) {
 	// Set count = 0
@@ -223,15 +236,39 @@ function checkObjects (array) {
 	} // End else
 } // End function
 
+
 // Help commands
 function helpCommands (userInput) {
+	// Validation string
 	var validation = "help";
+	// If userInput = validation string
 	if (userInput === validation) {
+		// Print these messages
 		activityLogMessage("drop | remove (item)");
 		activityLogMessage("get | retrieve | pickup | grab | take (item)");
 		activityLogMessage("use (item)");
 		activityLogMessage("go back");
 		activityLogMessage("go (direction)");
 		activityLogMessage("Commands:");
-	}
-}
+	} // End If
+} // End function
+
+// Save location
+function saveLocation(page) {
+	// Create savedLocation variable from page parameter
+	setLocalStorage("savedLocation", page);
+} // End function
+
+// Load save
+function loadSave() {
+	// Get localStorage saved location
+	var savedLocation = getLocalStorage("savedLocation")
+	// If there is a location
+	if (savedLocation) {
+		// Redirect to the location
+		window.location.href = savedLocation
+	} else { // If there isn't a location
+		// Alert: start a new game
+		debugMessage("No game save found. Please start a new game")
+	} // End else
+} // End function

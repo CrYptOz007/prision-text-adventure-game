@@ -46,6 +46,18 @@ img {
 	margin: auto;
 }
 
+@media only screen and (max-height: 768px) {
+    img {
+        height: 25%;
+    }
+}
+
+@media only screen and (max-height: 1000px) {
+    img {
+        height: 50%;
+    }
+}
+
 .menu {
 	position: relative;
 	top: 200px;
@@ -68,6 +80,7 @@ img {
 	background: transparent;
 	color: green;
 	font-family: 'VT323', monospace;
+	height: 100%;
 }
 
 .refreshContent option {

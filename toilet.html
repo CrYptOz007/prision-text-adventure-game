@@ -10,21 +10,16 @@
   
   <script>
 		
+		// Save location
+		saveLocation("toilet.html");
 		// Get playerInventory localstorage
     var playerInventory = getLocalStorage("playerInventory");
 		// Get activity localstorage
 		var activityLog = getLocalStorage("activityLog");
 		// Get localStorage location array
-		
 		var tempToiletObjects = getLocalStorage("tempToiletObjects")
 		// If user has not visited this page
-		if (typeof tempToiletObjects == "undefined" || !(tempToiletObjects instanceof Array)) {
-			// Create objects into localStorage location Array
-      tempToiletObjects = toilet.objects;
-			// Set localStorage Array
-      setLocalStorage("tempToiletObjects", tempToiletObjects);
-    } // End if
-		
+		loadObjects("tempToiletObjects", tempToiletObjects, toilet)
   </script>
   <table>
   	<!--- Image Section --->

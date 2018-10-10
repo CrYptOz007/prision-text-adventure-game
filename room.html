@@ -5,27 +5,22 @@
 	<script type="text/javascript" src="js/locationObjects.js"></script>
   <link rel="stylesheet" type="text/css" href="css/style.css">
   <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
-</head>
-<body>
-  
   <script>
 		
+		// Save location
+		saveLocation("room.html");
     // Get playerInventory localstorage
     var playerInventory = getLocalStorage("playerInventory");
 		// Get activity localstorage
 		var activityLog = getLocalStorage("activityLog");
 		// Get localStorage location array
-		
 		var tempRoomObjects = getLocalStorage("tempRoomObjects")
 		// If user has not visited this page
-		if (typeof tempRoomObjects == "undefined" || !(tempRoomObjects instanceof Array)) {
-			// Create objects into localStorage location Array
-      tempRoomObjects = room.objects;
-			// Set localStorage Array
-      setLocalStorage("tempRoomObjects", tempRoomObjects);
-    } // End if
+		loadObjects('tempRoomObjects', tempRoomObjects, room)
 		
   </script>
+</head>
+<body>
   <table>
   	<!--- Image Section --->
    	<tr>

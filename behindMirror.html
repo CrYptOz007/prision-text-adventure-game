@@ -10,20 +10,16 @@
   
   <script>
 		
+		// Save location
+		saveLocation("behindmirror.html");
     // Get playerInventory localstorage
     var playerInventory = getLocalStorage("playerInventory");
 		// Get activity localstorage
 		var activityLog = getLocalStorage("activityLog");
 		// Get localStorage location array
-		
-		var tempBehindMirror = getLocalStorage("tempBehindMirror")
+		var tempBehindMirror = getLocalStorage("tempBehindMirror");
 		// If user has not visited this page
-		if (typeof tempBehindMirror == "undefined" || !(tempBehindMirror instanceof Array)) {
-			// Create objects into localStorage location Array
-      tempBehindMirror = behindMirror.objects;
-			// Set localStorage Array
-      setLocalStorage("tempBehindMirror", tempBehindMirror);
-    } // End if
+		loadObjects("tempBehindMirror", tempBehindMirror, behindMirror);
 		
   </script>
   <table>
