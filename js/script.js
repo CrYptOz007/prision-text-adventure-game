@@ -2,16 +2,16 @@
 var directionArray = ["north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest"];
 
 // All action verbs
-var verbs = ['get', 'retrieve', 'pickup', 'drop', 'remove', 'go', 'use', 'destroy', 'smash'];
+var verbs = ['get', 'retrieve', 'pickup', 'grab', 'take', 'drop', 'remove', 'go', 'use', 'help'];
 
 // Verbs for retrieving an item
-var retrievalVerbs = ['get', 'retrieve', 'pickup'];
+var retrievalVerbs = ['get', 'retrieve', 'pickup', 'grab', 'take'];
 
 // Verbs for dropping an item
 var removeVerbs = ['drop', 'remove'];
 
 // Verbs for using an item
-var useVerbs = ['use', 'destroy', 'smash']
+var useVerbs = ['use'];
 
 
 // Validate Verbs
@@ -129,7 +129,7 @@ function refreshContent(array) {
 
 
 // Go back function
-function goBack(userInput,locationName) {
+function goBack(userInput, locationName) {
 	// Set validation string
 	var validation = "go back";
 	// If userInput === validation string
@@ -216,9 +216,22 @@ function checkObjects (array) {
 	// If localStorage location array doesn't have any objects
 	if (array.length === 0) {
 		// Set Element text
-		document.getElementById("objects").innerHTML = "There are no objects in this room";
+		document.getElementById("objects").innerHTML = "There are no objects in this area" + "<br> Type 'help' for list of commands";
 	} else { // If localStorage location array does have objects
 		// Set Element text
-		document.getElementById("objects").innerHTML = "These are the items in the room: " + array.join(", ");
+		document.getElementById("objects").innerHTML = "These are the items in the area: " + array.join(", ") + "<br> Type 'help' for list of commands";
 	} // End else
 } // End function
+
+// Help commands
+function helpCommands (userInput) {
+	var validation = "help";
+	if (userInput === validation) {
+		activityLogMessage("drop | remove (item)");
+		activityLogMessage("get | retrieve | pickup | grab | take (item)");
+		activityLogMessage("use (item)");
+		activityLogMessage("go back");
+		activityLogMessage("go (direction)");
+		activityLogMessage("Commands:");
+	}
+}

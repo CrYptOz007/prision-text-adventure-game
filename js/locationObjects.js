@@ -16,3 +16,14 @@ var behindMirror = {
 	desc: "You found a key behind the mirror! I wonder what it's for... Type 'go back' to go back to your previous location",
 	objects: ["key"]
 }
+
+var toilet = {
+	desc: "It's pretty shit.",
+	objects : []
+}
+
+var bed = {
+	desc: "A comfortable bed awaits you",
+	objects: []
+}
+

@@ -18,7 +18,7 @@
 		
 		var tempBehindMirror = getLocalStorage("tempBehindMirror")
 		// If user has not visited this page
-		if (typeof tempBehindMirror == "undefined" || !(tempBehindMirror instanceof Array)) {\
+		if (typeof tempBehindMirror == "undefined" || !(tempBehindMirror instanceof Array)) {
 			// Create objects into localStorage location Array
       tempBehindMirror = behindMirror.objects;
 			// Set localStorage Array
@@ -29,19 +29,13 @@
   <table>
   	<!--- Image Section --->
    	<tr>
-   		<th colspan="2">Image</th>
+   		<th>Image</th>
+			<th>Prison Room - Behind the Mirror</th>
    	</tr>
    	<tr>
-   		<td colspan="2"><img src="images/behindmirror.jpg"></td>
-   	</tr>
-   	
-    <tr>
-      <th>Prison Room - Behind Mirror</th>
-      <th>Inventory</th>
-    </tr>
+   		<td><img src="images/behindmirror.jpg"></td>
     
     <!--- Description Section --->
-    <tr>
       <td>
         <p id="description"></p>
         <p id="objects"></p>
@@ -69,28 +63,29 @@
 					validateVerbs(userInput, tempBehindMirror, "tempBehindMirror", behindMirror)
 					// Error Message
 					errorMessage(userInput);
+					// Help commands
+					helpCommands(userInput);
 				}
       </script>
       </td>
-      
+		</tr>
+		<tr>
+      <th>Inventory</th>
+      <th>Activity Log</th>
+    </tr>
+		<tr>
       <!--- Inventory Section --->
       <td>
-        <select size="10" style="width: 100%; height: 100%;">
+        <select class="refreshContent" size="10" style="width: 100%; height: 100%;">
           <script>
             refreshContent("playerInventory");
           </script>
         </select>
       </td>
-    </tr>
     
     <!--- Activity Log Section --->
-    <tr>
-      <th colspan="2">Activity Log</th>
-    </tr>
-    
-    <tr>
-    	<td colspan="2">
-    	<select id="activityLog" size="10" style="width: 100%; height: 100%;">
+    	<td>
+    	<select class="refreshContent" size="10" style="width: 100%; height: 100%;">
 				<script>
           refreshContent("activityLog");
         </script>
