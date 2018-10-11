@@ -7,19 +7,26 @@
   <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
 </head>
 <body>
- <script>
+ 	<script>
+	 
+	 	// Get playerInventory localstorage
+    var playerInventory = getLocalStorage("playerInventory");
+	 	
+		// If playerInventory array is not there
     if (typeof playerInventory == "undefined" || !(playerInventory instanceof Array)) {
       var playerInventory = [];
-
+			// Set the playerInventory array to blank
       setLocalStorage("playerInventory", playerInventory);
-
     }
+	 
+	 	// Get playerInventory localstorage
+    var activityLog = getLocalStorage("activityLog");
 		
+		// If activityLog array is not there
 		if (typeof activityLog == "undefined" || !(activityLog instanceof Array)) {
       var activityLog = [];
-
+			// Set activityLog array to blank
       setLocalStorage("activityLog", activityLog);
-
     }
 	</script>
   <div class="menu">

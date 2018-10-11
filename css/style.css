@@ -41,22 +41,11 @@ option {
 
 img {
 	width: 100%;
-	height: 250px;
+	height: 350px;
 	display: block;
 	margin: auto;
 }
 
-@media only screen and (max-height: 768px) {
-    img {
-        height: 25%;
-    }
-}
-
-@media only screen and (max-height: 1000px) {
-    img {
-        height: 50%;
-    }
-}
 
 .menu {
 	position: relative;

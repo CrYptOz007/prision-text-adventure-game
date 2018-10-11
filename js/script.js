@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////
+// Global Arrays
+//////////////////////////////////////////////////////////////////////
+
 // All available directions
 var directionArray = ["north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest"];
 
@@ -14,101 +18,9 @@ var removeVerbs = ['drop', 'remove'];
 var useVerbs = ['use'];
 
 
-// Load objects when new user visits the page
-function loadObjects (tempLocationObjectName, tempLocationObjects, locationName) {
-	// If user has not visited this page
-	if (typeof tempLocationObjects == "undefined" || !(tempLocationObjects instanceof Array)) {
-		// Create objects into localStorage location Array
-		var tempLocationObjects = locationName.objects;
-		// Set localStorage Array
-		setLocalStorage(tempLocationObjectName, tempLocationObjects);
-		location.reload();
-	} // End if
-}
-
-
-// Validate Verbs
-function validateVerbs(userInput, tempLocationArray, tempLocationArrayName, locationName) {
-	// Set count = 0
-	var count = 0;
-	// While count < locationName.objects array length
-	while (count < locationName.objects.length) {
-		
-		// Loop through retrieval Verbs
-		for (x = 0; x < retrievalVerbs.length; x++) {
-			// Set validation string = retrivalVerbs + object
-			var validation = retrievalVerbs[x] + ' ' + tempLocationArray[count];
-			// If userInput === validation string
-			if (userInput === validation) {
-				// Set playerInventory from getLocalStorage
-				var playerInventory = getLocalStorage("playerInventory", playerInventory);
-				// If the object is in the location
-				if (tempLocationArray.includes(tempLocationArray[count])) {
-					// Add the object to the playerInventory
-					playerInventory.push(tempLocationArray[count]);
-					// Log the message in the activityLog
-					activityLogMessage(`You have picked up ${tempLocationArray[count]}`)
-					// Filter out the object in the localstorage location array
-					tempLocationArray = tempLocationArray.filter (item => item !== tempLocationArray[count]);
-					
-					// Set LocalStorage values
-					setLocalStorage("playerInventory", playerInventory);
-					setLocalStorage(tempLocationArrayName, tempLocationArray);
-				} // End If
-			} // End If userInput validation
-		} // End For
-		
-		// Loop through removal Verbs
-		for (x = 0; x < removeVerbs.length; x++) {
-			// Set validation string = retrivalVerbs + object
-			var validation = removeVerbs[x] + ' ' + locationName.objects[count];
-			// If userInput === validation string
-			if (userInput === validation) {
-				// Set playerInventory from getLocalStorage
-				var playerInventory = getLocalStorage("playerInventory", playerInventory);
-				// If the object is in the player's inventory
-				if (playerInventory.includes(locationName.objects[count])) {
-					// Add the object to the localstorage location array
-					tempLocationArray.push(locationName.objects[count]);
-					// Filter out the object in the player's inventory
-					playerInventory = playerInventory.filter (item => item !== locationName.objects[count]);
-					// Log the message in the activityLog
-					activityLogMessage(`You have dropped ${locationName.objects[count]}`)
-					
-					// Set LocalStorage values
-					setLocalStorage("playerInventory", playerInventory);
-					setLocalStorage(tempLocationArrayName, tempLocationArray);
-				} // End if 
-			} // End if userInput validation
-		} // End for
-		
-		count++ // Increase count to next object
-	} // End while
-} // End Function
-
-
-// Validate use verbs
-function validateUseVerbs(userInput, item, locationName) {
-	// Loop through useVerbs array
-	for (i = 0; i < useVerbs.length; i++) {
-		// Set validation string = useVerbs + item parameter
-		var validateVerbs = useVerbs[i] + " " + item;
-		// If userInput === validation string
-		if (userInput === validateVerbs) {
-			// Set playerInventory from getLocalStorage
-			var playerInventory = getLocalStorage("playerInventory")
-			// If player has the item
-			if (playerInventory.includes(item)) {
-				// Redirect to locationName parameter
-				event.preventDefault();
-				window.location = locationName + ".html";
-			} else { // If player doesn't have the item
-				// Log message in activityLog
-				activityLogMessage(`You don't have the item in your inventory`)
-			} // End else
-		} // End if
-	} // End for
-} // End function
+//////////////////////////////////////////////////////////////////////
+// Basic functions
+//////////////////////////////////////////////////////////////////////
 
 
 // Debug Message Alert
@@ -128,17 +40,162 @@ function getLocalStorage(name) {
   return JSON.parse(window.localStorage.getItem(name));
 }
 
-
-// Refresh contents of a HTML Selection eg. playerInventory and activityLog
-function refreshContent(array) {
-	// Set array from localstorage array
-	var array = getLocalStorage(array);
-  
-	// Refresh elements in array
-  for (i = 0; i < array.length; i++ ){
-    document.write('<option>', array[i], '</option>');
-  }
+// Return the last word in a string
+function lastWord(words) {
+	// Set n as an array with each word seperated by a space as an element
+	var n = words.split(" ");
+	// Return the last element of the array
+	return n[n.length - 1]
 }
+
+
+// Seperate a camelCase string with spaces
+function insertSpaces(s) {
+    return s.split(/(?=[A-Z])/).map(function(p) {
+        return p.charAt(0).toUpperCase() + p.slice(1);
+    }).join(' ');
+}
+
+// Compare arrays
+function compareArray (reference, target) {
+	for (i = 0; i < target.length; i++) {
+		if (reference.indexOf(target[i] > -1)) {
+			return true
+		}
+	}
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// Object management system
+//////////////////////////////////////////////////////////////////////
+
+
+// Load objects when new user visits the page
+function loadObjects (tempLocationObjectName, tempLocationObjects, locationName) {
+	// If user has not visited this page
+	if (typeof tempLocationObjects == "undefined" || !(tempLocationObjects instanceof Array)) {
+		// Create objects into localStorage location Array
+		var tempLocationObjects = locationName.objects;
+		// Set localStorage Array
+		setLocalStorage(tempLocationObjectName, tempLocationObjects);
+		location.reload();
+	} // End if
+}
+
+
+// Validate Verbs
+function validateVerbs(userInput, tempLocationArray, tempLocationArrayName, locationName) {
+	// Set count = 0
+	var count = 0;
+	// Set playerInventory from getLocalStorage
+	var playerInventory = getLocalStorage("playerInventory", playerInventory);
+	// While count < locationName.objects array length
+	while (count < locationName.objects.length) {
+		
+		// Loop through retrieval Verbs
+		for (x = 0; x < retrievalVerbs.length; x++) {
+			// Set validation string = retrivalVerbs + object
+			var validation = retrievalVerbs[x] + ' ' + tempLocationArray[count];
+			// If userInput === validation string
+			if (userInput === validation) {
+				// If the object is in the location
+				if (tempLocationArray.includes(tempLocationArray[count])) {
+					// Add the object to the playerInventory
+					playerInventory.push(tempLocationArray[count]);
+					// Log the message in the activityLog
+					activityLogMessage(`You have picked up ${tempLocationArray[count]}`)
+					// Filter out the object in the localstorage location array
+					tempLocationArray = tempLocationArray.filter (item => item !== tempLocationArray[count]);
+					
+					// Set LocalStorage values
+					setLocalStorage("playerInventory", playerInventory);
+					setLocalStorage(tempLocationArrayName, tempLocationArray);
+					return false;
+				}
+			} else if (userInput.includes(retrievalVerbs[x])) {
+				if (locationName.objects.includes(lastWord(userInput)) && compareArray(playerInventory, locationName.objects)) {
+					return activityLogMessage(lastWord(userInput) + ' is already in your inventory')
+				} else {
+					return activityLogMessage(lastWord(userInput) + ' is an invalid item');
+				} 
+			}
+		} // End For
+		
+		// Loop through removal Verbs
+		for (x = 0; x < removeVerbs.length; x++) {
+			// Set validation string = retrivalVerbs + object
+			var validation = removeVerbs[x] + ' ' + locationName.objects[count];
+			// If userInput === validation string
+			if (userInput === validation) {
+				// If the object is in the player's inventory
+				if (playerInventory.includes(locationName.objects[count])) {
+					// Add the object to the localstorage location array
+					tempLocationArray.push(locationName.objects[count]);
+					// Filter out the object in the player's inventory
+					playerInventory = playerInventory.filter (item => item !== locationName.objects[count]);
+					// Log the message in the activityLog
+					activityLogMessage(`You have dropped ${locationName.objects[count]}`)
+					
+					// Set LocalStorage values
+					setLocalStorage("playerInventory", playerInventory);
+					setLocalStorage(tempLocationArrayName, tempLocationArray);
+					return false;
+				} // End iI
+			} else if (userInput.includes(removeVerbs[x])) {
+				if (locationName.objects.includes(lastWord(userInput)) && compareArray(tempLocationArray, locationName.objects)) {
+					return activityLogMessage(lastWord(userInput) + ' is already in the area')
+				} else if (!locationName.objects.includes(lastWord(userInput))){
+					return activityLogMessage(lastWord(userInput) + ' is an invalid item');
+				} 
+			}
+		} // End for
+		
+		count++ // Increase count to next object
+	} // End while
+} // End Function
+
+
+// Validate use verbs
+function validateUseVerbs(userInput, item, locationName) {
+	// Loop through useVerbs array
+	for (i = 0; i < useVerbs.length; i++) {
+		// Set validation string = useVerbs + item parameter
+		var validateVerbs = useVerbs[i] + " " + item;
+		// Retrieve the last word of the userInput parameter
+		var incorrectItem = lastWord(userInput)
+		// Set playerInventory from getLocalStorage
+		var playerInventory = getLocalStorage("playerInventory")
+		// If userInput === validation string
+		if (userInput === validateVerbs) {
+			// If player has the item
+			if (playerInventory.includes(item)) {
+				// Log message
+				activityLogMessage("You have used the " + item)
+				// Redirect to locationName parameter
+				event.preventDefault();
+				window.location = locationName + ".html";
+			} else { // If player doesn't have the item
+				// Log message in activityLog
+				activityLogMessage(`You don't have the item in your inventory`)
+			} // End else
+			// If userInput includes the useVerbs but typed the incorrect item
+		} else if (userInput.includes(useVerbs[i])) {
+			// If playerInventory has the incorrect item
+			if (playerInventory.includes(incorrectItem)) {
+				// Log message
+				activityLogMessage("You can't use this item")
+			} else { // If playerInventory doesn't have the incorrect item
+				activityLogMessage("You don't have the item in your inventory")
+			} // End else
+		} // End else if
+	} // End for
+} // End function
+
+
+//////////////////////////////////////////////////////////////////////
+// Go command function
+//////////////////////////////////////////////////////////////////////
 
 
 // Go back function
@@ -147,6 +204,8 @@ function goBack(userInput, locationName) {
 	var validation = "go back";
 	// If userInput === validation string
 	if (userInput === validation) {
+		// Log the message
+		activityLogMessage("You went back to " + insert(locationName));
 		// Redirect to page
 		event.preventDefault();
 		window.location = locationName + ".html";
@@ -164,6 +223,8 @@ function goLocation(userInput, direction, locationName, objectRequired = false, 
 	if (userInput === validation) {
 		// If objectRequired is false
 		if (!objectRequired) {
+			// Log the message
+			activityLogMessage("You have went " + direction + " to the " + insertSpaces(locationName));
 			//Redirect to location
 			event.preventDefault();
 			window.location = locationName + ".html";
@@ -174,6 +235,8 @@ function goLocation(userInput, direction, locationName, objectRequired = false, 
 					activityLogMessage(objectRequiredMessage);
 					return false;
 			} else { // If player has object in his inventory then
+				// Log the message
+				activityLogMessage("You have went " + direction + " to " + insertSpaces(locationName));
 				// Redirect to location
 				event.preventDefault();
 				window.location = locationName + ".html";
@@ -183,11 +246,9 @@ function goLocation(userInput, direction, locationName, objectRequired = false, 
 } // End Function
 
 
-// Get Location Description
-function getDescription (locationName) {
-	// Set description by locationName
-	document.getElementById("description").innerHTML = locationName.desc;
-}
+//////////////////////////////////////////////////////////////////////
+// Activity Log system
+//////////////////////////////////////////////////////////////////////
 
 
 // Error Message
@@ -223,20 +284,6 @@ function activityLogMessage(message) {
 	setLocalStorage("activityLog", activityLog);
 }
 
-
-// Validate Objects
-function checkObjects (array) {
-	// If localStorage location array doesn't have any objects
-	if (array.length === 0) {
-		// Set Element text
-		document.getElementById("objects").innerHTML = "There are no objects in this area" + "<br> Type 'help' for list of commands";
-	} else { // If localStorage location array does have objects
-		// Set Element text
-		document.getElementById("objects").innerHTML = "These are the items in the area: " + array.join(", ") + "<br> Type 'help' for list of commands";
-	} // End else
-} // End function
-
-
 // Help commands
 function helpCommands (userInput) {
 	// Validation string
@@ -252,6 +299,47 @@ function helpCommands (userInput) {
 		activityLogMessage("Commands:");
 	} // End If
 } // End function
+
+
+//////////////////////////////////////////////////////////////////////
+// Refresh contents
+//////////////////////////////////////////////////////////////////////
+
+// Get Location Description
+function getDescription (locationName) {
+	// Set description by locationName
+	document.getElementById("description").innerHTML = locationName.desc;
+}
+
+
+// Validate Objects
+function checkObjects (array) {
+	// If localStorage location array doesn't have any objects
+	if (array.length === 0) {
+		// Set Element text
+		document.getElementById("objects").innerHTML = "There are no objects in this area" + "<br> Type 'help' for list of commands";
+	} else { // If localStorage location array does have objects
+		// Set Element text
+		document.getElementById("objects").innerHTML = "These are the items in the area: " + array.join(", ") + "<br> Type 'help' for list of commands";
+	} // End else
+} // End function
+
+// Refresh contents of a HTML Selection eg. playerInventory and activityLog
+function refreshContent(array) {
+	// Set array from localstorage array
+	var array = getLocalStorage(array);
+  
+	// Refresh elements in array
+  for (i = 0; i < array.length; i++ ){
+    document.write('<option>', array[i], '</option>');
+  }
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// Save/Load system
+//////////////////////////////////////////////////////////////////////
+
 
 // Save location
 function saveLocation(page) {
@@ -272,3 +360,4 @@ function loadSave() {
 		debugMessage("No game save found. Please start a new game")
 	} // End else
 } // End function
+
