@@ -7,34 +7,12 @@
   <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
 </head>
 <body>
- 	<script>
-	 
-	 	// Get playerInventory localstorage
-    var playerInventory = getLocalStorage("playerInventory");
-	 	
-		// If playerInventory array is not there
-    if (typeof playerInventory == "undefined" || !(playerInventory instanceof Array)) {
-      var playerInventory = [];
-			// Set the playerInventory array to blank
-      setLocalStorage("playerInventory", playerInventory);
-    }
-	 
-	 	// Get playerInventory localstorage
-    var activityLog = getLocalStorage("activityLog");
-		
-		// If activityLog array is not there
-		if (typeof activityLog == "undefined" || !(activityLog instanceof Array)) {
-      var activityLog = [];
-			// Set activityLog array to blank
-      setLocalStorage("activityLog", activityLog);
-    }
-	</script>
   <div class="menu">
   	<h1>Escape the Prison</h1>
   	<h2>A text adventure game</h2>
   	<h4>By Gerrick Cheok</h4>
   	<h5 style="margin-top: -30px;">HTML, CSS, Javascript</h5>
-  	<button type="button" class="big-button" onclick="window.location.href = 'room.html'">Start Game</button>
-  	<button type="button" class="big-button" onclick="loadSave()">Load Game</button>
+  	<button type="button" class="big-button" onclick="window.location.href = 'room.html'; localStorage.clear();">Start New Game</button>
+  	<button type="button" class="big-button" onclick="loadSave()">Load Saved Game</button>
   </div>
 </body>

@@ -11,8 +11,24 @@
 		saveLocation("room.html");
     // Get playerInventory localstorage
     var playerInventory = getLocalStorage("playerInventory");
-		// Get activity localstorage
-		var activityLog = getLocalStorage("activityLog");
+	 	
+		// If playerInventory array is not there
+    if (typeof playerInventory == "undefined" || !(playerInventory instanceof Array)) {
+      var playerInventory = [];
+			// Set the playerInventory array to blank
+      setLocalStorage("playerInventory", playerInventory);
+    }
+	 
+	 	// Get playerInventory localstorage
+    var activityLog = getLocalStorage("activityLog");
+		
+		// If activityLog array is not there
+		if (typeof activityLog == "undefined" || !(activityLog instanceof Array)) {
+      var activityLog = [];
+			// Set activityLog array to blank
+      setLocalStorage("activityLog", activityLog);
+    }
+		
 		// Get localStorage location array
 		var tempRoomObjects = getLocalStorage("tempRoomObjects")
 		// If user has not visited this page
