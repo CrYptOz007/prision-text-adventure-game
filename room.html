@@ -52,7 +52,7 @@
           var userInput = document.getElementById("answer").value;
 					
 					// Go location function: door to the north requring a key. Message is "The door is locked"
-					goLocation(userInput, "north", "door", "key", "The door is locked");
+					goLocation(userInput, "north", "corridor", "key", "The door is locked");
 					
 					// Go location function: sink and mirror to the southeast
 					goLocation(userInput, "southeast", "sinkAndMirror");
@@ -62,7 +62,7 @@
 					goLocation(userInput, "east", "bed");
 					
 					// validate use verbs: use key to access the door
-					validateUseVerbs(userInput, "key", "door")
+					validateUseVerbs(userInput, "key", "corridor")
 					// Validate verbs
 					validateVerbs(userInput, tempRoomObjects, "tempRoomObjects", room);
 					// Error message

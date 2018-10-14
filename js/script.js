@@ -57,14 +57,19 @@ function insertSpaces(s) {
 }
 
 // Compare arrays
-function compareArray (reference, target) {
+/*function compareArray (reference, target) {
+	// Stringify reference array
+	reference = JSON.stringify(reference)
+	// Loop target array
 	for (i = 0; i < target.length; i++) {
-		if (reference.indexOf(target[i] > -1)) {
+		// If reference string includes target[i]
+		if (reference.includes(target[i])) {
 			return true
+		} else {
+			return false
 		}
 	}
-}
-
+}*/
 
 //////////////////////////////////////////////////////////////////////
 // Object management system
@@ -113,10 +118,15 @@ function validateVerbs(userInput, tempLocationArray, tempLocationArrayName, loca
 					setLocalStorage(tempLocationArrayName, tempLocationArray);
 					return false;
 				}
+				// Else if userInput includes any retrieval verb
 			} else if (userInput.includes(retrievalVerbs[x])) {
-				if (locationName.objects.includes(lastWord(userInput)) && compareArray(playerInventory, locationName.objects)) {
+				// If locationName.objects include the lastWord of userInput && the object is in the players inventory
+				if (locationName.objects.includes(lastWord(userInput)) && playerInventory.includes(lastWord(userInput))) {
+					// Output: it is in your inventory
 					return activityLogMessage(lastWord(userInput) + ' is already in your inventory')
-				} else {
+					// Else if locationName.object doesn't include lastWord of userInput
+				} else if (!locationName.objects.includes(lastWord(userInput))) {
+					// Output: invalid item
 					return activityLogMessage(lastWord(userInput) + ' is an invalid item');
 				} 
 			}
@@ -142,13 +152,18 @@ function validateVerbs(userInput, tempLocationArray, tempLocationArrayName, loca
 					setLocalStorage(tempLocationArrayName, tempLocationArray);
 					return false;
 				} // End iI
+				// Else if userInput includes any removal verbs
 			} else if (userInput.includes(removeVerbs[x])) {
-				if (locationName.objects.includes(lastWord(userInput)) && compareArray(tempLocationArray, locationName.objects)) {
+				// If locationName.objects include lastWord of userInput && tempLocationArray includes lastWord of userInput
+				if (locationName.objects.includes(lastWord(userInput)) && tempLocationArray.includes(lastWord(userInput))) { 
+					// Output: item is already in this area
 					return activityLogMessage(lastWord(userInput) + ' is already in the area')
+					// Else if locationName doesn't include the lastWord of userInput
 				} else if (!locationName.objects.includes(lastWord(userInput))){
+					// Invalid item
 					return activityLogMessage(lastWord(userInput) + ' is an invalid item');
-				} 
-			}
+				} // End else if
+			} // end else if
 		} // End for
 		
 		count++ // Increase count to next object
@@ -205,7 +220,7 @@ function goBack(userInput, locationName) {
 	// If userInput === validation string
 	if (userInput === validation) {
 		// Log the message
-		activityLogMessage("You went back to " + insert(locationName));
+		activityLogMessage("You went back to " + insertSpaces(locationName));
 		// Redirect to page
 		event.preventDefault();
 		window.location = locationName + ".html";
@@ -224,7 +239,7 @@ function goLocation(userInput, direction, locationName, objectRequired = false, 
 		// If objectRequired is false
 		if (!objectRequired) {
 			// Log the message
-			activityLogMessage("You have went " + direction + " to the " + insertSpaces(locationName));
+			activityLogMessage("You went " + direction + " to the " + insertSpaces(locationName));
 			//Redirect to location
 			event.preventDefault();
 			window.location = locationName + ".html";
@@ -236,7 +251,7 @@ function goLocation(userInput, direction, locationName, objectRequired = false, 
 					return false;
 			} else { // If player has object in his inventory then
 				// Log the message
-				activityLogMessage("You have went " + direction + " to " + insertSpaces(locationName));
+				activityLogMessage("You went " + direction + " to " + insertSpaces(locationName));
 				// Redirect to location
 				event.preventDefault();
 				window.location = locationName + ".html";

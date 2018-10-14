@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<head>
+  <title>Cafeteria</title>
+  <script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/locationObjects.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+</head>
+<body>
+  
+  <script>
+		
+		// Save location
+		saveLocation("cafeteria.html");
+		// Get playerInventory localstorage
+    var playerInventory = getLocalStorage("playerInventory");
+		// Get activity localstorage
+		var activityLog = getLocalStorage("activityLog");
+		// Get localStorage location array
+		
+		var tempCafeteriaObjects = getLocalStorage("tempCafeteriaObjects")
+		// If user has not visited this page
+		loadObjects("tempCafeteriaObjects", tempCafeteriaObjects, cafeteria)
+		
+  </script>
+  <table>
+  	<!--- Image Section --->
+   	<tr>
+   		<th>Image</th>
+			<th>Cafeteria</th>
+   	</tr>
+   	<tr>
+   		<td><img src="images/cafeteria.jpg"></td>
+    
+    <!--- Description Section --->
+      <td>
+        <p id="description"></p>
+        <p id="objects"></p>
+        <p id="message"></p>
+      <form onSubmit="checkAnswer();">
+        ><input id="answer" type="text" maxlength="55" placeholder="_" autofocus autocomplete="off" />
+ 	    <input type="submit" class="submit" value="SUBMIT" />
+      </form>
+
+      <script>
+				// Get description from location object.description
+        getDescription(cafeteria)
+				// Check for objects in location
+        checkObjects(tempCafeteriaObjects)
+
+				// checkAnswer function onSubmit
+        function checkAnswer() {
+					// Set userInput from answer input
+          var userInput = document.getElementById("answer").value;
+					
+					// Go location function: painting to the west
+					goLocation(userInput, "west", "painting")
+					// Go location function: kitchen to the north
+					goLocation(userInput, "north", "kitchen")
+					// Go location function: corridor west to the south
+					goLocation(userInput, "south", "corridorWast")
+					// Go back
+					goBack(userInput, "corridorWest");
+
+					// Validate verbs
+					validateVerbs(userInput, tempCafeteriaObjects, "tempCafeteriaObjects", cafeteria)
+					// Error message
+					errorMessage(userInput)
+					// Help commands
+					helpCommands(userInput);
+				}
+      </script>
+      </td>
+		</tr>
+		<tr>
+      <th>Inventory</th>
+      <th>Activity Log</th>
+    </tr>
+		<tr>
+      <!--- Inventory Section --->
+      <td>
+        <select class="refreshContent" size="10" style="width: 100%; height: 100%;">
+          <script>
+            refreshContent("playerInventory");
+          </script>
+        </select>
+      </td>
+    
+    <!--- Activity Log Section --->
+    	<td>
+    	<select class="refreshContent" size="10" style="width: 100%; height: 100%;">
+				<script>
+          refreshContent("activityLog");
+        </script>
+        </select>
+			</td>
+    </tr>
+  </table>
+  
+</body>

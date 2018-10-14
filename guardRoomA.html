@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<head>
+  <title>Guard Room A</title>
+  <script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/locationObjects.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+</head>
+<body>
+  
+  <script>
+		
+		// Save location
+		saveLocation("guardRoomA.html");
+		// Get playerInventory localstorage
+    var playerInventory = getLocalStorage("playerInventory");
+		// Get activity localstorage
+		var activityLog = getLocalStorage("activityLog");
+		// Get localStorage location array
+		
+		var tempGuardRoomAObjects = getLocalStorage("tempGuardRoomAObjects")
+		// If user has not visited this page
+		loadObjects("tempGuardRoomAObjects", tempGuardRoomAObjects, guardRoomA)
+		
+  </script>
+  <table>
+  	<!--- Image Section --->
+   	<tr>
+   		<th>Image</th>
+			<th>Guard Room A</th>
+   	</tr>
+   	<tr>
+   		<td><img src="images/guardRoomA.jpg"></td>
+    
+    <!--- Description Section --->
+      <td>
+        <p id="description"></p>
+        <p id="objects"></p>
+        <p id="message"></p>
+      <form onSubmit="checkAnswer();">
+        ><input id="answer" type="text" maxlength="55" placeholder="_" autofocus autocomplete="off" />
+ 	    <input type="submit" class="submit" value="SUBMIT" />
+      </form>
+
+      <script>
+				// Get description from location object.description
+        getDescription(guardRoomA)
+				// Check for objects in location
+        checkObjects(tempGuardRoomAObjects)
+
+				// checkAnswer function onSubmit
+        function checkAnswer() {
+					// Set userInput from answer input
+          var userInput = document.getElementById("answer").value;
+					
+					// Go location function: shelf to the west
+					goLocation(userInput, "west", "guardRoomAShelf")
+					// Go location function: wardrobe to the northeast
+					goLocation(userInput, "northwest", "guardRoomAWardrobe")
+					// Go location function: bookshelf to the northeast
+					goLocation(userInput, "northeast", "guardRoomABookshelf")
+					// Go location function: desk to the east
+					goLocation(userInput, "east", "guardRoomADesk")
+					// Go location function: upstairs to the south
+					goLocation(userInput, "south", "guardRoomA")
+					// Go back to room command
+					goBack(userInput, "upstairs");
+
+					// Validate verbs
+					validateVerbs(userInput, tempGuardRoomAObjects, "tempGuardRoomAObjects", guardRoomA)
+					// Error message
+					errorMessage(userInput)
+					// Help commands
+					helpCommands(userInput);
+				}
+      </script>
+      </td>
+		</tr>
+		<tr>
+      <th>Inventory</th>
+      <th>Activity Log</th>
+    </tr>
+		<tr>
+      <!--- Inventory Section --->
+      <td>
+        <select class="refreshContent" size="10" style="width: 100%; height: 100%;">
+          <script>
+            refreshContent("playerInventory");
+          </script>
+        </select>
+      </td>
+    
+    <!--- Activity Log Section --->
+    	<td>
+    	<select class="refreshContent" size="10" style="width: 100%; height: 100%;">
+				<script>
+          refreshContent("activityLog");
+        </script>
+        </select>
+			</td>
+    </tr>
+  </table>
+  
+</body>

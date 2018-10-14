@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<head>
+  <title>Cafeteria - Kitchen Sink</title>
+  <script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/locationObjects.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+</head>
+<body>
+  
+  <script>
+		
+		// Save location
+		saveLocation("sink.html");
+		// Get playerInventory localstorage
+    var playerInventory = getLocalStorage("playerInventory");
+		// Get activity localstorage
+		var activityLog = getLocalStorage("activityLog");
+		// Get localStorage location array
+		
+		var tempSinkObjects = getLocalStorage("tempSinkObjects")
+		// If user has not visited this page
+		loadObjects("tempSinkObjects", tempSinkObjects, sink)
+		
+  </script>
+  <table>
+  	<!--- Image Section --->
+   	<tr>
+   		<th>Image</th>
+			<th>Cafeteria - Kitchen Sink</th>
+   	</tr>
+   	<tr>
+   		<td><img src="images/sink.jpg"></td>
+    
+    <!--- Description Section --->
+      <td>
+        <p id="description"></p>
+        <p id="objects"></p>
+        <p id="message"></p>
+      <form onSubmit="checkAnswer();">
+        ><input id="answer" type="text" maxlength="55" placeholder="_" autofocus autocomplete="off" />
+ 	    <input type="submit" class="submit" value="SUBMIT" />
+      </form>
+
+      <script>
+				// Get description from location object.description
+        getDescription(sink)
+				// Check for objects in location
+        checkObjects(tempSinkObjects)
+
+				// checkAnswer function onSubmit
+        function checkAnswer() {
+					// Set userInput from answer input
+          var userInput = document.getElementById("answer").value;
+					
+					// Go location function: kitchen to the south west
+					goLocation(userInput, "southwest", "kitchen")
+					// Go back
+					goBack(userInput, "kitchen");
+
+					// Validate verbs
+					validateVerbs(userInput, tempSinkObjects, "tempSinkObjects", sink)
+					// Error message
+					errorMessage(userInput)
+					// Help commands
+					helpCommands(userInput);
+				}
+      </script>
+      </td>
+		</tr>
+		<tr>
+      <th>Inventory</th>
+      <th>Activity Log</th>
+    </tr>
+		<tr>
+      <!--- Inventory Section --->
+      <td>
+        <select class="refreshContent" size="10" style="width: 100%; height: 100%;">
+          <script>
+            refreshContent("playerInventory");
+          </script>
+        </select>
+      </td>
+    
+    <!--- Activity Log Section --->
+    	<td>
+    	<select class="refreshContent" size="10" style="width: 100%; height: 100%;">
+				<script>
+          refreshContent("activityLog");
+        </script>
+        </select>
+			</td>
+    </tr>
+  </table>
+  
+</body>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!---
+////////////////////////////////////////////////////////////
+Make sure you create the LOCATION_NAME object in scripts/locationObjects.js
+
+Hello, this is the template for creating locations
+Make sure when creating location html files, you name it LOCATION_NAME.html
+Please replace anything that contains LOCATION_NAME with your desired location name
+
+Hint:
+Ctrl + F and replace LOCATION_NAME to whatever you want
+////////////////////////////////////////////////////////////
+
+-->
+
+<head>
+  <title>Jail Room - Template</title>
+  <script type="text/javascript" src="js/script.js"></script>
+	<script type="text/javascript" src="js/locationObjects.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+  <script>
+		
+		// Save location
+		saveLocation("LOCATION_NAME.html");
+    // Get playerInventory localstorage
+    var playerInventory = getLocalStorage("playerInventory");
+		// Get activity localstorage
+		var activityLog = getLocalStorage("activityLog");
+		// Get localStorage location array
+		var tempLOCATION_NAMEObjects = getLocalStorage("tempLOCATION_NAMEObjects") // Replace this
+		// If user has not visited this page
+		loadObjects('tempLOCATION_NAMEObjects', tempLOCATION_NAMEObjects, LOCATION_NAME) // Replace this
+		
+  </script>
+</head>
+<body>
+  <table>
+  	<!--- Image Section --->
+   	<tr>
+   		<th>Image</th>
+			<th>LOCATION_NAME</th> <!-- Replace this -->
+   	</tr>
+   	<tr>
+			<td><img src="images/LOCATION_NAME.jpg"></td> <!-- Replace this -->
+    
+    <!--- Description Section --->
+      <td>
+        <p id="description"></p>
+        <p id="objects"></p>
+        <p id="message"></p>
+      <form onSubmit="checkAnswer();">
+        ><input id="answer" type="text" maxlength="55" placeholder="_" autofocus autocomplete="off" />
+ 	    <input type="submit" class="submit" value="SUBMIT" />
+      </form>
+
+      <script>
+				// Get description from location object.description
+        getDescription(LOCATION_NAME); // Replace this
+				// Check for objects in location
+        checkObjects(tempLOCATION_NAMEObjects); // Replace this
+
+				// checkAnswer function onSubmit
+        function checkAnswer() {
+					// Set userInput from answer input
+          var userInput = document.getElementById("answer").value;
+					
+					//////////////////////////////////////////
+					// This function requires an object to go to the location.
+					// Enter your string parameters of the location that requires an object
+					// to be present in your inventory
+					//////////////////////////////////////////
+					goLocation(userInput, "DIRECTION", "NEW_LOCATION", "OBJECT_REQUIRED", "MESSAGE OF OBJECT_REQUIRED");
+					
+					//////////////////////////////////////////
+					// This function does NOT require an object to go to the location
+					// Enter your string parameters of the location
+					//////////////////////////////////////////
+					goLocation(userInput, "DIRECTON", "NEW_LOCATION");
+					
+					//////////////////////////////////////////
+					// This function does moves you back to the location set
+					// Enter your string parameters of the location
+					//////////////////////////////////////////
+					goBack(userInput, "PREV_LOCATION");
+					
+					//////////////////////////////////////////
+					// This function validates the use object verbs to go to a location
+					// Enter your string parameters of the location
+					// that requires you to use the object to go to
+					//////////////////////////////////////////
+					validateUseVerbs(userInput, "OBJECT_REQUIRED", "LOCATION_NAME")
+					
+					//////////////////////////////////////////
+					// This function validates all the pickup/drop objects
+					// Enter your string and variable parameters. 
+					// Replace LOCATION_NAME
+					//////////////////////////////////////////
+					validateVerbs(userInput, tempLOCATION_NAMEObjects, "tempLOCATION_NAMEObjects", LOCATION_NAME);
+					// Error message
+					errorMessage(userInput);
+					// Help commands
+					helpCommands(userInput);
+				}
+      </script>
+      </td>
+		</tr>
+		<tr>
+      <th>Inventory</th>
+      <th>Activity Log</th>
+    </tr>
+		<tr>
+      <!--- Inventory Section --->
+      <td>
+        <select class="refreshContent" size="10" style="width: 100%; height: 100%;">
+          <script>
+            refreshContent("playerInventory");
+          </script>
+        </select>
+      </td>
+    
+    <!--- Activity Log Section --->
+    	<td>
+    	<select class="refreshContent" size="10" style="width: 100%; height: 100%;">
+				<script>
+          refreshContent("activityLog");
+        </script>
+        </select>
+			</td>
+    </tr>
+  </table>
+  
+</body>

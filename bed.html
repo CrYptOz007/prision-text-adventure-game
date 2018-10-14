@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-  <title>Jail Room - Toilet</title>
+  <title>Jail Room - Bed</title>
   <script type="text/javascript" src="js/script.js"></script>
 	<script type="text/javascript" src="js/locationObjects.js"></script>
   <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -57,6 +57,8 @@
 					goLocation(userInput, "west", "room")
 					// Go back to room command
 					goBack(userInput, "room");
+					// validate use verbs: use toothpaste to apply some on the wall
+					validateUseVerbs(userInput, "toothpaste", "toothpastedWall")
 					
 					// Validate verbs
 					validateVerbs(userInput, tempBedObjects, "tempBedObjects", bed)
