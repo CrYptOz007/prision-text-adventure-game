@@ -11,16 +11,16 @@
   <script>
 		
 		// Save location
-		saveLocation("guardRoomA.html");
+		saveLocation("guardRoomABookshelf.html");
 		// Get playerInventory localstorage
     var playerInventory = getLocalStorage("playerInventory");
 		// Get activity localstorage
 		var activityLog = getLocalStorage("activityLog");
 		// Get localStorage location array
 		
-		var tempGuardRoomAObjects = getLocalStorage("tempGuardRoomAObjects")
+		var tempGuardRoomABookshelfObjects = getLocalStorage("tempGuardRoomABookshelfObjects")
 		// If user has not visited this page
-		loadObjects("tempGuardRoomAObjects", tempGuardRoomAObjects, guardRoomA)
+		loadObjects("tempGuardRoomABookshelfObjects", tempGuardRoomABookshelfObjects, guardRoomABookshelf)
 		
   </script>
   <table>
@@ -44,22 +44,22 @@
 
       <script>
 				// Get description from location object.description
-        getDescription(guardRoomA)
+        getDescription(guardRoomABookshelf)
 				// Check for objects in location
-        checkObjects(tempGuardRoomAObjects)
+        checkObjects(tempGuardRoomABookshelfObjects)
 
 				// checkAnswer function onSubmit
         function checkAnswer() {
 					// Set userInput from answer input
           var userInput = document.getElementById("answer").value;
 					
-					// Go location function: gaurd room a to the south
-					goLocation(userInput, "south", "guardRoomA")
+					// Go location function: gaurd room a to the southwest
+					goLocation(userInput, "southwest", "guardRoomABookshelf")
 					// Go back to room command
 					goBack(userInput, "guardRoomA");
 
 					// Validate verbs
-					validateVerbs(userInput, tempGuardRoomAObjects, "tempGuardRoomAObjects", guardRoomA)
+					validateVerbs(userInput, tempGuardRoomABookshelfObjects, "tempGuardRoomABookshelfObjects", guardRoomABookshelf)
 					// Error message
 					errorMessage(userInput)
 					// Help commands

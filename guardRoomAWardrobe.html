@@ -11,16 +11,16 @@
   <script>
 		
 		// Save location
-		saveLocation("guardRoomABookshelf.html");
+		saveLocation("guardRoomAWardrobe.html");
 		// Get playerInventory localstorage
     var playerInventory = getLocalStorage("playerInventory");
 		// Get activity localstorage
 		var activityLog = getLocalStorage("activityLog");
 		// Get localStorage location array
 		
-		var tempGuardRoomABookshelfObjects = getLocalStorage("tempGuardRoomABookshelfObjects")
+		var tempGuardRoomAWardrobeObjects = getLocalStorage("tempGuardRoomAWardrobeObjects")
 		// If user has not visited this page
-		loadObjects("tempGuardRoomABookshelfObjects", tempGuardRoomABookshelfObjects, guardRoomABookshelf)
+		loadObjects("tempGuardRoomAWardrobeObjects", tempGuardRoomAWardrobeObjects, guardRoomAWardrobe)
 		
   </script>
   <table>
@@ -30,7 +30,7 @@
 			<th>Guard Room A - Wardrobe</th>
    	</tr>
    	<tr>
-   		<td><img src="images/guardRoomABookshelf.jpg"></td>
+   		<td><img src="images/guardRoomAWardrobe.jpg"></td>
     
     <!--- Description Section --->
       <td>
@@ -44,22 +44,22 @@
 
       <script>
 				// Get description from location object.description
-        getDescription(guardRoomABookshelf)
+        getDescription(guardRoomAWardrobe)
 				// Check for objects in location
-        checkObjects(tempGuardRoomABookshelfObjects)
+        checkObjects(tempGuardRoomAWardrobeObjects)
 
 				// checkAnswer function onSubmit
         function checkAnswer() {
 					// Set userInput from answer input
           var userInput = document.getElementById("answer").value;
 					
-					// Go location function: gaurd room a to the southwest
-					goLocation(userInput, "southwest", "guardRoomA")
+					// Go location function: gaurd room a to the southeast
+					goLocation(userInput, "southeast", "guardRoomA")
 					// Go back to room command
 					goBack(userInput, "guardRoomA");
 
 					// Validate verbs
-					validateVerbs(userInput, tempGuardRoomABookshelfObjects, "tempGuardRoomABookshelfObjects", guardRoomABookshelf)
+					validateVerbs(userInput, tempGuardRoomAWardrobeObjects, "tempGuardRoomAWardrobeObjects", guardRoomAWardrobe)
 					// Error message
 					errorMessage(userInput)
 					// Help commands
